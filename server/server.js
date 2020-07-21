@@ -10,11 +10,13 @@ const db = require("../database/users.dbaccess");
 const authRouter = require("./auth/auth-router");
 server.use("/api/auth", authRouter);
 
+const verifyToken = require("./auth/verifyToken");
+
 server.get("/", (req, res) => {
   res.status(200).json({ api: "Running" });
 });
 
-server.get("/api/users", async (req, res) => {
+server.get("/api/users", verifyToken, async (req, res) => {
   const users = await db.find();
   res.status(200).json({ data: users });
 });
