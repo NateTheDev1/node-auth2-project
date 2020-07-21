@@ -34,7 +34,9 @@ router.post("/login", async (req, res) => {
     res.status(400).json({ error: "Requires a username and password" });
   }
 
-  const user = await db.findByUsername(req.body.username);
+  const user = await db
+    .findByUsername(req.body.username)
+    .catch((err) => console.log(err));
   const verified = await bcrypt.compareSync(req.body.password, user.password);
 
   if (!verified) {
