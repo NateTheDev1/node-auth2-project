@@ -13,4 +13,8 @@ function create(user) {
     });
 }
 
-module.exports = { find, create };
+function findByUsername(username) {
+  return db.select("*").from("users").where({ username }).first();
+}
+
+module.exports = { find, create, findByUsername };
